@@ -1,12 +1,8 @@
 import axios from 'axios';
-
-// Backend Server URL
 const API = axios.create({
-  baseURL: 'http://localhost:5000/api', // Aapka backend is URL par chal raha hai
+  baseURL: 'http://localhost:5000/api',
 });
 
-// Request Interceptor: Jab bhi React se backend ko request jaye gi, 
-// agar localStorage me JWT token hoga toh yeh automatic headers me 'Bearer token' attach kar de ga.
 API.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');

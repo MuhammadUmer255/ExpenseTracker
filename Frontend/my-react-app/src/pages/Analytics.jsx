@@ -18,7 +18,6 @@ const Analytics = () => {
   const incomePct = totalFlow > 0 ? Math.round((totalIncome / totalFlow) * 100) : 0;
   const expensePct = totalFlow > 0 ? Math.round((totalExpense / totalFlow) * 100) : 0;
 
-  // Category-wise Breakdown for Expenses
   const categoryTotals = transactions
     .filter((t) => t.type === 'expense')
     .reduce((acc, t) => {
@@ -30,8 +29,7 @@ const Analytics = () => {
 
   return (
     <div className="space-y-8 animate-fade-in">
-      
-      {/* Header */}
+
       <div className="bg-slate-800/40 p-6 rounded-2xl border border-slate-700/50 backdrop-blur-md">
         <h1 className="text-3xl font-extrabold text-white">Visual Analytics</h1>
         <p className="text-slate-400 text-sm mt-1">Real-time breakdown calculated from your added transactions</p>
@@ -44,12 +42,10 @@ const Analytics = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
-          {/* Income vs Expense Ratio */}
+
           <div className="bg-slate-800/60 backdrop-blur-xl border border-slate-700/60 p-6 rounded-2xl shadow-xl space-y-6">
             <h3 className="text-lg font-bold text-white">Income vs Expense Ratio</h3>
-            
-            {/* Progress Bar */}
+
             <div className="w-full bg-slate-900 h-5 rounded-full overflow-hidden flex p-1 border border-slate-700">
               <div
                 style={{ width: `${incomePct}%` }}
@@ -76,7 +72,6 @@ const Analytics = () => {
             </div>
           </div>
 
-          {/* Expense Category Breakdown */}
           <div className="bg-slate-800/60 backdrop-blur-xl border border-slate-700/60 p-6 rounded-2xl shadow-xl space-y-4">
             <h3 className="text-lg font-bold text-white">Expense Distribution by Category</h3>
 

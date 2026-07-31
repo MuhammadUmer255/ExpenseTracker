@@ -51,5 +51,4 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Yeh line lazmi honi chahiye (Named export):
 export const useAuth = () => useContext(AuthContext);

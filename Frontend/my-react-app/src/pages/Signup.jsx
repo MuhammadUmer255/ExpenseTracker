@@ -18,7 +18,6 @@ const Signup = () => {
         e.preventDefault();
         setError('');
 
-        // Password match check
         if (formData.password !== formData.confirmPassword) {
             setError("Passwords do not match!");
             return;
@@ -27,7 +26,7 @@ const Signup = () => {
         setLoading(true);
 
         try {
-            // Backend ko API Request
+
             await API.post('/auth/signup', {
                 name: formData.name,
                 email: formData.email,
@@ -35,9 +34,9 @@ const Signup = () => {
             });
 
             alert("Account created successfully! Please login.");
-            navigate('/login'); // Signup hote hi Login page par redirect
+            navigate('/login');
         } catch (err) {
-            // Agar backend se error aaye ya backend off ho
+
             setError(err.response?.data?.message || "Signup failed. Make sure your backend server is running.");
         } finally {
             setLoading(false);
@@ -48,20 +47,15 @@ const Signup = () => {
         <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
             <div className="w-full max-w-md bg-slate-800 rounded-2xl shadow-2xl border border-slate-700 p-8">
 
-                {/* Header */}
                 <div className="text-center mb-6">
                     <h1 className="text-3xl font-extrabold text-white">Create Account</h1>
                     <p className="text-slate-400 text-sm mt-2">Start tracking your expenses today</p>
                 </div>
-
-                {/* Error Alert Box */}
                 {error && (
                     <div className="bg-red-500/10 border border-red-500/50 text-red-400 text-sm p-3 rounded-xl mb-4 text-center">
                         {error}
                     </div>
                 )}
-
-                {/* Form */}
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label className="block text-sm font-medium text-slate-300 mb-1.5">Full Name</label>

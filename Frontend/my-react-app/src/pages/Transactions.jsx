@@ -26,15 +26,13 @@ const Transactions = () => {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      
-      {/* Header */}
+
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-800/40 p-6 rounded-2xl border border-slate-700/50 backdrop-blur-md">
         <div>
           <h1 className="text-3xl font-extrabold text-white">All Transactions</h1>
           <p className="text-slate-400 text-sm mt-1">Manage and filter your transaction history</p>
         </div>
 
-        {/* Filter Buttons */}
         <div className="flex gap-2 bg-slate-900 p-1.5 rounded-xl border border-slate-700">
           <button
             onClick={() => setFilterType('all')}
@@ -57,7 +55,7 @@ const Transactions = () => {
         </div>
       </div>
 
-      {/* List */}
+
       <div className="bg-slate-800/50 backdrop-blur-md border border-slate-700/50 rounded-2xl p-6 shadow-xl">
         {filtered.length === 0 ? (
           <div className="text-center py-12 text-slate-400 border-2 border-dashed border-slate-700/60 rounded-xl">
@@ -71,9 +69,8 @@ const Transactions = () => {
                 className="flex justify-between items-center p-4 bg-slate-900/60 border border-slate-700/40 rounded-xl hover:border-slate-600 transition"
               >
                 <div className="flex items-center gap-4">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm ${
-                    item.type === 'income' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'
-                  }`}>
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm ${item.type === 'income' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'
+                    }`}>
                     {item.type === 'income' ? '↓' : '↑'}
                   </div>
                   <div>

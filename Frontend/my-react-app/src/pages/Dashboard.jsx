@@ -20,7 +20,6 @@ const Dashboard = () => {
     localStorage.setItem('app_transactions', JSON.stringify(transactions));
   }, [transactions]);
 
-  // Calculations
   const totalIncome = transactions
     .filter((t) => t.type === 'income')
     .reduce((acc, t) => acc + Number(t.amount), 0);
@@ -59,8 +58,7 @@ const Dashboard = () => {
 
   return (
     <div className="space-y-8 animate-fade-in transition-all duration-300">
-      
-      {/* Top Header */}
+
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-800/40 p-6 rounded-2xl border border-slate-700/50 backdrop-blur-md shadow-lg">
         <div>
           <h1 className="text-3xl font-extrabold text-white tracking-tight">Financial Overview</h1>
@@ -74,10 +72,9 @@ const Dashboard = () => {
         </button>
       </div>
 
-      {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
-        {/* Balance Card */}
+
+
         <div className="bg-slate-800/60 backdrop-blur-xl border border-slate-700/60 p-6 rounded-2xl shadow-xl hover:border-indigo-500/40 transition duration-300 transform hover:-translate-y-1">
           <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider">Total Balance</p>
           <h2 className={`text-3xl font-extrabold mt-3 ${totalBalance >= 0 ? 'text-indigo-400' : 'text-rose-400'}`}>
@@ -88,7 +85,6 @@ const Dashboard = () => {
           </span>
         </div>
 
-        {/* Income Card */}
         <div className="bg-slate-800/60 backdrop-blur-xl border border-slate-700/60 p-6 rounded-2xl shadow-xl hover:border-emerald-500/40 transition duration-300 transform hover:-translate-y-1">
           <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider">Total Income</p>
           <h2 className="text-3xl font-extrabold text-emerald-400 mt-3">
@@ -99,7 +95,6 @@ const Dashboard = () => {
           </span>
         </div>
 
-        {/* Expense Card */}
         <div className="bg-slate-800/60 backdrop-blur-xl border border-slate-700/60 p-6 rounded-2xl shadow-xl hover:border-rose-500/40 transition duration-300 transform hover:-translate-y-1">
           <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider">Total Expense</p>
           <h2 className="text-3xl font-extrabold text-rose-400 mt-3">
@@ -112,7 +107,6 @@ const Dashboard = () => {
 
       </div>
 
-      {/* Recent Transactions List */}
       <div className="bg-slate-800/50 backdrop-blur-md border border-slate-700/50 rounded-2xl p-6 shadow-xl">
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-xl font-bold text-white">Recent Activity</h3>
@@ -134,9 +128,8 @@ const Dashboard = () => {
                 className="flex justify-between items-center p-4 bg-slate-900/60 border border-slate-700/40 rounded-xl hover:border-slate-600 transition"
               >
                 <div className="flex items-center gap-4">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm ${
-                    item.type === 'income' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'
-                  }`}>
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm ${item.type === 'income' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'
+                    }`}>
                     {item.type === 'income' ? '↓' : '↑'}
                   </div>
                   <div>
@@ -153,7 +146,6 @@ const Dashboard = () => {
         )}
       </div>
 
-      {/* Modal for Adding Transaction */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in">
           <div className="bg-slate-800 border border-slate-700 p-6 rounded-2xl w-full max-w-md shadow-2xl space-y-4">
