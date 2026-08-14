@@ -8,3 +8,9 @@
 .animate-fade-in {
   animation: fadeIn 0.35s ease-out forwards;
 }
+
+body {
+  margin: 0;
+  background-color: #ffffff; /* ya #f8fafc (slate-50) */
+  color: #0f172a;
+}

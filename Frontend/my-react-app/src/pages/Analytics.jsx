@@ -1,108 +1,150 @@
 import React, { useState, useEffect } from 'react';
+import API from '../services/api';
 
 const Analytics = () => {
-  const [transactions] = useState(() => {
-    const saved = localStorage.getItem('app_transactions');
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        setLoading(true);
+        const res = await API.get('/transactions');
+        setTransactions(Array.isArray(res.data) ? res.data : []);
+      } catch (err) {
+        console.error("Analytics fetch error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTransactions();
+  }, []);
+
+  // Total Income & Expense Calculation
   const totalIncome = transactions
     .filter((t) => t.type === 'income')
-    .reduce((acc, t) => acc + Number(t.amount), 0);
+    .reduce((acc, t) => acc + Number(t.amount || 0), 0);
 
   const totalExpense = transactions
     .filter((t) => t.type === 'expense')
-    .reduce((acc, t) => acc + Number(t.amount), 0);
+    .reduce((acc, t) => acc + Number(t.amount || 0), 0);
 
-  const totalFlow = totalIncome + totalExpense;
-  const incomePct = totalFlow > 0 ? Math.round((totalIncome / totalFlow) * 100) : 0;
-  const expensePct = totalFlow > 0 ? Math.round((totalExpense / totalFlow) * 100) : 0;
+  const totalVolume = totalIncome + totalExpense;
+  const incomePercentage = totalVolume > 0 ? Math.round((totalIncome / totalVolume) * 100) : 0;
+  const expensePercentage = totalVolume > 0 ? Math.round((totalExpense / totalVolume) * 100) : 0;
 
-  const categoryTotals = transactions
+  // Expense Breakdown by Category
+  const expenseByCategory = transactions
     .filter((t) => t.type === 'expense')
     .reduce((acc, t) => {
-      acc[t.category] = (acc[t.category] || 0) + Number(t.amount);
+      const cat = t.category || 'Others';
+      acc[cat] = (acc[cat] || 0) + Number(t.amount || 0);
       return acc;
     }, {});
 
-  const formatRs = (val) => `Rs. ${Number(val).toLocaleString('en-PK')}`;
+  const categoryList = Object.keys(expenseByCategory).map((cat) => ({
+    name: cat,
+    amount: expenseByCategory[cat],
+    percentage: totalExpense > 0 ? Math.round((expenseByCategory[cat] / totalExpense) * 100) : 0
+  })).sort((a, b) => b.amount - a.amount);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <p className="text-slate-400 font-medium text-sm">Loading analytics...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="space-y-8 animate-fade-in">
-
-      <div className="bg-slate-800/40 p-6 rounded-2xl border border-slate-700/50 backdrop-blur-md">
-        <h1 className="text-3xl font-extrabold text-white">Visual Analytics</h1>
-        <p className="text-slate-400 text-sm mt-1">Real-time breakdown calculated from your added transactions</p>
-      </div>
-
-      {transactions.length === 0 ? (
-        <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-12 text-center text-slate-400">
-          <p className="text-lg font-semibold text-slate-300">No Analytics Data Available</p>
-          <p className="text-sm text-slate-500 mt-2">Add some income or expense transactions on the Dashboard to unlock dynamic analytics.</p>
+    <div className="min-h-screen bg-slate-50 py-8 px-4">
+      <div className="max-w-6xl mx-auto space-y-6">
+        
+        {/* Header */}
+        <div>
+          <h1 className="text-2xl font-extrabold text-slate-900">Financial Analytics</h1>
+          <p className="text-xs text-slate-500 mt-1">Visual spending breakdown and inflow vs outflow stats.</p>
         </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-          <div className="bg-slate-800/60 backdrop-blur-xl border border-slate-700/60 p-6 rounded-2xl shadow-xl space-y-6">
-            <h3 className="text-lg font-bold text-white">Income vs Expense Ratio</h3>
-
-            <div className="w-full bg-slate-900 h-5 rounded-full overflow-hidden flex p-1 border border-slate-700">
-              <div
-                style={{ width: `${incomePct}%` }}
-                className="bg-emerald-500 h-full rounded-full transition-all duration-500"
-              />
-              <div
-                style={{ width: `${expensePct}%` }}
-                className="bg-rose-500 h-full rounded-full transition-all duration-500"
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 text-center">
-              <div className="bg-slate-900/60 p-4 rounded-xl border border-slate-700/40">
-                <p className="text-xs text-slate-400 font-semibold">Income Share</p>
-                <p className="text-2xl font-black text-emerald-400 mt-1">{incomePct}%</p>
-                <p className="text-xs text-slate-500 mt-1">{formatRs(totalIncome)}</p>
-              </div>
-
-              <div className="bg-slate-900/60 p-4 rounded-xl border border-slate-700/40">
-                <p className="text-xs text-slate-400 font-semibold">Expense Share</p>
-                <p className="text-2xl font-black text-rose-400 mt-1">{expensePct}%</p>
-                <p className="text-xs text-slate-500 mt-1">{formatRs(totalExpense)}</p>
-              </div>
-            </div>
+        {transactions.length === 0 ? (
+          <div className="bg-white p-12 rounded-2xl text-center text-slate-500 shadow-sm border border-slate-200">
+            <p className="font-semibold text-sm text-slate-700">No transactions recorded yet!</p>
+            <p className="text-xs text-slate-400 mt-1">Add transactions from the Dashboard to see real-time analytics.</p>
           </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            {/* 1. VISUAL BAR: Income vs Expense Comparison */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
+              <div className="flex items-center justify-between">
+                <h2 className="text-base font-bold text-slate-900">Cashflow Comparison</h2>
+                <span className="text-xs font-semibold text-slate-400">Inflow vs Outflow</span>
+              </div>
 
-          <div className="bg-slate-800/60 backdrop-blur-xl border border-slate-700/60 p-6 rounded-2xl shadow-xl space-y-4">
-            <h3 className="text-lg font-bold text-white">Expense Distribution by Category</h3>
+              {/* Progress Bar Visual */}
+              <div className="space-y-2">
+                <div className="flex justify-between text-xs font-bold">
+                  <span className="text-emerald-600">Income: {incomePercentage}%</span>
+                  <span className="text-rose-600">Expense: {expensePercentage}%</span>
+                </div>
+                <div className="w-full h-4 bg-slate-100 rounded-full overflow-hidden flex">
+                  <div 
+                    className="bg-emerald-500 h-full transition-all duration-500" 
+                    style={{ width: `${incomePercentage}%` }}
+                  />
+                  <div 
+                    className="bg-rose-500 h-full transition-all duration-500" 
+                    style={{ width: `${expensePercentage}%` }}
+                  />
+                </div>
+              </div>
 
-            {Object.keys(categoryTotals).length === 0 ? (
-              <p className="text-slate-500 text-sm py-8 text-center">No expenses logged yet.</p>
-            ) : (
-              <div className="space-y-4">
-                {Object.entries(categoryTotals).map(([cat, amount]) => {
-                  const percentage = Math.round((amount / totalExpense) * 100);
-                  return (
-                    <div key={cat} className="space-y-1">
-                      <div className="flex justify-between text-xs font-semibold text-slate-300">
-                        <span>{cat}</span>
-                        <span>{formatRs(amount)} ({percentage}%)</span>
+              {/* Detailed Numbers */}
+              <div className="grid grid-cols-2 gap-4 pt-2">
+                <div className="bg-emerald-50 border border-emerald-100 p-4 rounded-xl">
+                  <p className="text-xs text-emerald-700 font-medium">Total Income</p>
+                  <p className="text-lg font-extrabold text-emerald-800 mt-1">Rs. {totalIncome.toLocaleString()}</p>
+                </div>
+                <div className="bg-rose-50 border border-rose-100 p-4 rounded-xl">
+                  <p className="text-xs text-rose-700 font-medium">Total Expense</p>
+                  <p className="text-lg font-extrabold text-rose-800 mt-1">Rs. {totalExpense.toLocaleString()}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. CATEGORY BREAKDOWN BARS */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
+              <div className="flex items-center justify-between">
+                <h2 className="text-base font-bold text-slate-900">Expense by Category</h2>
+                <span className="text-xs font-semibold text-slate-400">Share %</span>
+              </div>
+
+              {categoryList.length === 0 ? (
+                <p className="text-xs text-slate-400 py-8 text-center">No expense categories found.</p>
+              ) : (
+                <div className="space-y-4">
+                  {categoryList.map((item, idx) => (
+                    <div key={idx} className="space-y-1.5">
+                      <div className="flex justify-between text-xs font-semibold text-slate-700">
+                        <span>{item.name}</span>
+                        <span>Rs. {item.amount.toLocaleString()} ({item.percentage}%)</span>
                       </div>
-                      <div className="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden border border-slate-700/50">
-                        <div
-                          style={{ width: `${percentage}%` }}
-                          className="bg-indigo-500 h-full rounded-full transition-all duration-500"
+                      <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+                        <div 
+                          className="bg-blue-600 h-full rounded-full transition-all duration-500" 
+                          style={{ width: `${item.percentage}%` }}
                         />
                       </div>
                     </div>
-                  );
-                })}
-              </div>
-            )}
+                  ))}
+                </div>
+              )}
+            </div>
+
           </div>
+        )}
 
-        </div>
-      )}
-
+      </div>
     </div>
   );
 };
