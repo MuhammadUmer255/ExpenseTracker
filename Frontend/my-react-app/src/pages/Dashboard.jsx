@@ -8,7 +8,6 @@ const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Fetch transactions from backend
   const fetchTransactions = async () => {
     try {
       setLoading(true);
@@ -25,13 +24,11 @@ const Dashboard = () => {
     fetchTransactions();
   }, []);
 
-  // Handle new transaction addition
   const handleTransactionAdded = (newTx) => {
     setTransactions((prev) => [newTx, ...prev]);
-    setIsModalOpen(false); // Modal close ho jayega add hone ke baad
+    setIsModalOpen(false);
   };
 
-  // Dynamic calculations for Income, Expense & Balance
   const totalIncome = transactions
     .filter((t) => t.type === 'income')
     .reduce((acc, t) => acc + Number(t.amount), 0);
@@ -45,8 +42,7 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-white text-slate-800 py-8 px-4 relative">
       <div className="max-w-6xl mx-auto space-y-8">
-        
-        {/* Header Section */}
+
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
           <div>
             <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
@@ -57,8 +53,7 @@ const Dashboard = () => {
             </p>
           </div>
 
-          {/* Add Transaction Button with onClick */}
-          <button 
+          <button
             onClick={() => setIsModalOpen(true)}
             className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs rounded-xl shadow-sm transition"
           >
@@ -66,10 +61,8 @@ const Dashboard = () => {
           </button>
         </div>
 
-        {/* FULL SOLID BLUE CARDS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          {/* 1. Total Balance Card */}
+
           <div className="bg-blue-600 text-white p-6 rounded-2xl shadow-md space-y-3">
             <span className="text-xs font-semibold uppercase tracking-wider text-blue-100">
               Total Balance
@@ -82,7 +75,6 @@ const Dashboard = () => {
             </span>
           </div>
 
-          {/* 2. Total Income Card */}
           <div className="bg-blue-600 text-white p-6 rounded-2xl shadow-md space-y-3">
             <span className="text-xs font-semibold uppercase tracking-wider text-blue-100">
               Total Income
@@ -95,7 +87,6 @@ const Dashboard = () => {
             </span>
           </div>
 
-          {/* 3. Total Expense Card */}
           <div className="bg-blue-600 text-white p-6 rounded-2xl shadow-md space-y-3">
             <span className="text-xs font-semibold uppercase tracking-wider text-blue-100">
               Total Expense
@@ -110,7 +101,6 @@ const Dashboard = () => {
 
         </div>
 
-        {/* Recent Activity Section */}
         <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
           <div className="flex items-center justify-between border-b border-slate-100 pb-4">
             <h2 className="text-lg font-bold text-slate-900">Recent Activity</h2>
@@ -145,13 +135,13 @@ const Dashboard = () => {
 
       </div>
 
-      {/* ADD TRANSACTION MODAL POPUP */}
+
       {isModalOpen && (
         <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="w-full max-w-md">
-            <AddTransaction 
-              onTransactionAdded={handleTransactionAdded} 
-              onClose={() => setIsModalOpen(false)} 
+            <AddTransaction
+              onTransactionAdded={handleTransactionAdded}
+              onClose={() => setIsModalOpen(false)}
             />
           </div>
         </div>

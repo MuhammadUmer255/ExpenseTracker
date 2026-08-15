@@ -5,7 +5,6 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
 
-      {/* 1. HERO SECTION */}
       <section className="relative overflow-hidden pt-16 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-slate-50">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
@@ -37,7 +36,6 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Hero Preview Card */}
           <div className="relative mx-auto w-full max-w-md lg:max-w-none">
             <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xl space-y-4">
               <div className="flex items-center justify-between border-b border-slate-100 pb-4">
@@ -50,7 +48,6 @@ const Home = () => {
                 </span>
               </div>
 
-              {/* Sample Mini Progress */}
               <div className="space-y-2">
                 <div className="flex justify-between text-xs font-semibold">
                   <span className="text-slate-600">Monthly Budget Spent</span>
@@ -77,7 +74,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 2. STATS HIGHLIGHTS BAR */}
       <section className="py-10 bg-white border-y border-slate-200/80 px-4">
         <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           <div>
@@ -99,7 +95,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 3. HOW IT WORKS (3 SIMPLE STEPS) */}
       <section className="py-20 px-4 max-w-6xl mx-auto">
         <div className="text-center max-w-2xl mx-auto space-y-3 mb-16">
           <span className="text-xs font-bold text-blue-600 uppercase tracking-widest">Workflow</span>
@@ -120,7 +115,6 @@ const Home = () => {
             </p>
           </div>
 
-          {/* Step 2 */}
           <div className="bg-white p-8 rounded-3xl border border-slate-200/80 shadow-sm relative space-y-4">
             <div className="w-12 h-12 bg-emerald-600 text-white rounded-2xl flex items-center justify-center font-black text-lg shadow-md shadow-emerald-500/20">
               02
@@ -131,7 +125,6 @@ const Home = () => {
             </p>
           </div>
 
-          {/* Step 3 */}
           <div className="bg-white p-8 rounded-3xl border border-slate-200/80 shadow-sm relative space-y-4">
             <div className="w-12 h-12 bg-indigo-600 text-white rounded-2xl flex items-center justify-center font-black text-lg shadow-md shadow-indigo-500/20">
               03
@@ -145,7 +138,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 4. FEATURES GRID */}
       <section className="py-16 px-4 bg-white border-t border-slate-200/80">
         <div className="max-w-6xl mx-auto">
           <div className="text-center max-w-2xl mx-auto space-y-3 mb-12">
@@ -187,7 +179,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 5. CALL TO ACTION BANNER */}
       <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto bg-blue-600 text-white rounded-3xl p-10 text-center space-y-6 shadow-xl shadow-blue-500/20">
           <h2 className="text-3xl sm:text-4xl font-extrabold">Ready to take charge of your finances?</h2>
