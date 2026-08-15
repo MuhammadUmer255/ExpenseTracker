@@ -5,7 +5,7 @@ const AddTransaction = ({ onTransactionAdded, onClose }) => {
     const [formData, setFormData] = useState({
         title: '',
         amount: '',
-        type: 'expense', // default 'expense'
+        type: 'expense',
         category: 'Food',
         date: new Date().toISOString().split('T')[0]
     });
@@ -29,18 +29,18 @@ const AddTransaction = ({ onTransactionAdded, onClose }) => {
         setLoading(true);
 
         try {
-            // API request to save transaction in backend database
+
             const response = await API.post('/transactions', {
                 ...formData,
                 amount: Number(formData.amount)
             });
 
-            // Callback to refresh dashboard transactions list
+
             if (onTransactionAdded) {
                 onTransactionAdded(response.data);
             }
 
-            // Reset Form Fields
+
             setFormData({
                 title: '',
                 amount: '',
@@ -59,12 +59,12 @@ const AddTransaction = ({ onTransactionAdded, onClose }) => {
 
     return (
         <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm max-w-md w-full">
-            
-            {/* Header */}
+
+
             <div className="flex items-center justify-between mb-5">
                 <h2 className="text-lg font-bold text-slate-900">Add New Transaction</h2>
                 {onClose && (
-                    <button 
+                    <button
                         onClick={onClose}
                         className="text-slate-400 hover:text-slate-600 text-sm font-bold p-1"
                     >
@@ -73,7 +73,7 @@ const AddTransaction = ({ onTransactionAdded, onClose }) => {
                 )}
             </div>
 
-            {/* Error Message */}
+
             {error && (
                 <div className="bg-rose-50 border border-rose-200 text-rose-600 text-xs p-3 rounded-xl mb-4 text-center font-medium">
                     {error}
@@ -81,34 +81,31 @@ const AddTransaction = ({ onTransactionAdded, onClose }) => {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
-                
-                {/* Type Selection (Expense vs Income) */}
+
                 <div className="grid grid-cols-2 gap-2 bg-slate-100 p-1 rounded-xl">
                     <button
                         type="button"
                         onClick={() => setFormData({ ...formData, type: 'expense' })}
-                        className={`py-2 text-xs font-semibold rounded-lg transition ${
-                            formData.type === 'expense'
-                                ? 'bg-rose-600 text-white shadow-sm'
-                                : 'text-slate-600 hover:text-slate-900'
-                        }`}
+                        className={`py-2 text-xs font-semibold rounded-lg transition ${formData.type === 'expense'
+                            ? 'bg-rose-600 text-white shadow-sm'
+                            : 'text-slate-600 hover:text-slate-900'
+                            }`}
                     >
                         Expense
                     </button>
                     <button
                         type="button"
                         onClick={() => setFormData({ ...formData, type: 'income' })}
-                        className={`py-2 text-xs font-semibold rounded-lg transition ${
-                            formData.type === 'income'
-                                ? 'bg-emerald-600 text-white shadow-sm'
-                                : 'text-slate-600 hover:text-slate-900'
-                        }`}
+                        className={`py-2 text-xs font-semibold rounded-lg transition ${formData.type === 'income'
+                            ? 'bg-emerald-600 text-white shadow-sm'
+                            : 'text-slate-600 hover:text-slate-900'
+                            }`}
                     >
                         Income
                     </button>
                 </div>
 
-                {/* Title Input */}
+
                 <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1">Title / Description</label>
                     <input
@@ -122,7 +119,6 @@ const AddTransaction = ({ onTransactionAdded, onClose }) => {
                     />
                 </div>
 
-                {/* Amount & Category Inputs */}
                 <div className="grid grid-cols-2 gap-3">
                     <div>
                         <label className="block text-xs font-semibold text-slate-700 mb-1">Amount ($)</label>
@@ -158,7 +154,7 @@ const AddTransaction = ({ onTransactionAdded, onClose }) => {
                     </div>
                 </div>
 
-                {/* Date Input */}
+
                 <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1">Date</label>
                     <input
@@ -170,7 +166,7 @@ const AddTransaction = ({ onTransactionAdded, onClose }) => {
                     />
                 </div>
 
-                {/* Submit Button */}
+
                 <button
                     type="submit"
                     disabled={loading}

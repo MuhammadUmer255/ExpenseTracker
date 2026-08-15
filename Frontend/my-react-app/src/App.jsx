@@ -14,7 +14,7 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-      <div className="min-h-screen bg-white text-slate-800 flex flex-col">
+        <div className="min-h-screen bg-white text-slate-800 flex flex-col">
           <div>
             <Navbar />
             <main className="flex-1 bg-white">
@@ -22,8 +22,6 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
-
-                {/* Protected Application Routes */}
                 <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
                 <Route path="/transactions" element={<ProtectedRoute><Transactions /></ProtectedRoute>} />
                 <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />

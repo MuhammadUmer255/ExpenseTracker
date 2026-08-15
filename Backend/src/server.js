@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
-app.use("/api/transactions", require("./routes/transactionRoutes")); // <-- Ab yeh bilkul sahi jagah par hai
+app.use("/api/transactions", require("./routes/transactionRoutes"));
 
 const PORT = 5000;
 app.listen(PORT, () => {

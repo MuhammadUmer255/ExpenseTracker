@@ -20,7 +20,6 @@ const Analytics = () => {
     fetchTransactions();
   }, []);
 
-  // Total Income & Expense Calculation
   const totalIncome = transactions
     .filter((t) => t.type === 'income')
     .reduce((acc, t) => acc + Number(t.amount || 0), 0);
@@ -33,7 +32,6 @@ const Analytics = () => {
   const incomePercentage = totalVolume > 0 ? Math.round((totalIncome / totalVolume) * 100) : 0;
   const expensePercentage = totalVolume > 0 ? Math.round((totalExpense / totalVolume) * 100) : 0;
 
-  // Expense Breakdown by Category
   const expenseByCategory = transactions
     .filter((t) => t.type === 'expense')
     .reduce((acc, t) => {
@@ -59,8 +57,7 @@ const Analytics = () => {
   return (
     <div className="min-h-screen bg-slate-50 py-8 px-4">
       <div className="max-w-6xl mx-auto space-y-6">
-        
-        {/* Header */}
+
         <div>
           <h1 className="text-2xl font-extrabold text-slate-900">Financial Analytics</h1>
           <p className="text-xs text-slate-500 mt-1">Visual spending breakdown and inflow vs outflow stats.</p>
@@ -73,33 +70,30 @@ const Analytics = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            
-            {/* 1. VISUAL BAR: Income vs Expense Comparison */}
+
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
               <div className="flex items-center justify-between">
                 <h2 className="text-base font-bold text-slate-900">Cashflow Comparison</h2>
                 <span className="text-xs font-semibold text-slate-400">Inflow vs Outflow</span>
               </div>
 
-              {/* Progress Bar Visual */}
               <div className="space-y-2">
                 <div className="flex justify-between text-xs font-bold">
                   <span className="text-emerald-600">Income: {incomePercentage}%</span>
                   <span className="text-rose-600">Expense: {expensePercentage}%</span>
                 </div>
                 <div className="w-full h-4 bg-slate-100 rounded-full overflow-hidden flex">
-                  <div 
-                    className="bg-emerald-500 h-full transition-all duration-500" 
+                  <div
+                    className="bg-emerald-500 h-full transition-all duration-500"
                     style={{ width: `${incomePercentage}%` }}
                   />
-                  <div 
-                    className="bg-rose-500 h-full transition-all duration-500" 
+                  <div
+                    className="bg-rose-500 h-full transition-all duration-500"
                     style={{ width: `${expensePercentage}%` }}
                   />
                 </div>
               </div>
 
-              {/* Detailed Numbers */}
               <div className="grid grid-cols-2 gap-4 pt-2">
                 <div className="bg-emerald-50 border border-emerald-100 p-4 rounded-xl">
                   <p className="text-xs text-emerald-700 font-medium">Total Income</p>
@@ -112,7 +106,6 @@ const Analytics = () => {
               </div>
             </div>
 
-            {/* 2. CATEGORY BREAKDOWN BARS */}
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
               <div className="flex items-center justify-between">
                 <h2 className="text-base font-bold text-slate-900">Expense by Category</h2>
@@ -130,8 +123,8 @@ const Analytics = () => {
                         <span>Rs. {item.amount.toLocaleString()} ({item.percentage}%)</span>
                       </div>
                       <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                        <div 
-                          className="bg-blue-600 h-full rounded-full transition-all duration-500" 
+                        <div
+                          className="bg-blue-600 h-full rounded-full transition-all duration-500"
                           style={{ width: `${item.percentage}%` }}
                         />
                       </div>
