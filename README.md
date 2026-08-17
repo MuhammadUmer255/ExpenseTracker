@@ -32,7 +32,7 @@ A full-stack financial tracking application built using the MERN stack. It allow
 ---
 
 ## 📁 Project Structure
-
+```text
 Expense Tracker/
 ├── Backend/
 │   ├── src/
@@ -84,3 +84,4 @@ Expense Tracker/
         ├── package-lock.json
         ├── package.json
         └── vite.config.js
+```
