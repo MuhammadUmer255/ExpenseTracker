@@ -33,21 +33,54 @@ A full-stack financial tracking application built using the MERN stack. It allow
 
 ## 📁 Project Structure
 
-```text
-expense-tracker/
-├── client/                 # Frontend React Application
+Expense Tracker/
+├── Backend/
 │   ├── src/
-│   │   ├── components/     # Reusable components (AddTransaction, etc.)
-│   │   ├── pages/          # Dashboard, Transactions, etc.
-│   │   ├── services/       # Axios API client setup
-│   │   ├── App.jsx
-│   │   └── main.jsx
+│   │   ├── config/
+│   │   │   └── db.js
+│   │   ├── controllers/
+│   │   │   └── authController.js
+│   │   ├── middleware/
+│   │   │   └── authMiddleware.js
+│   │   ├── models/
+│   │   │   ├── Transaction.js
+│   │   │   └── User.js
+│   │   ├── routes/
+│   │   │   ├── AuthRoutes.js
+│   │   │   └── transactionRoutes.js
+│   │   ├── utils/
+│   │   │   └── generateTokens.js
+│   │   └── server.js
+│   ├── package-lock.json
 │   └── package.json
 │
-└── server/                 # Backend Node/Express API
-    ├── config/             # Database connection setup
-    ├── controllers/        # Request handlers
-    ├── models/             # Mongoose schemas (Transaction)
-    ├── routes/             # Express routes
-    ├── server.js           # Server entrance
-    └── package.json
+└── Frontend/
+    └── my-react-app/
+        ├── public/
+        │   └── logo.png
+        ├── src/
+        │   ├── components/
+        │   │   ├── AddTransaction.jsx
+        │   │   ├── Footer.jsx
+        │   │   ├── Navbar.jsx
+        │   │   └── ProtectedRoute.jsx
+        │   ├── context/
+        │   │   └── AuthContext.jsx
+        │   ├── pages/
+        │   │   ├── Analytics.jsx
+        │   │   ├── Dashboard.jsx
+        │   │   ├── Home.jsx
+        │   │   ├── Login.jsx
+        │   │   ├── Signup.jsx
+        │   │   └── Transactions.jsx
+        │   ├── services/
+        │   │   └── api.js
+        │   ├── App.jsx
+        │   ├── index.css
+        │   └── main.jsx
+        ├── .gitignore
+        ├── .oxlintrc.json
+        ├── index.html
+        ├── package-lock.json
+        ├── package.json
+        └── vite.config.js
