@@ -1,12 +1,19 @@
 const mongoose = require("mongoose");
 
+let isConnected = false;
+
 const connectDB = async () => {
+  if (isConnected) {
+    return;
+  }
+
   try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/expense-tracker");
-    console.log("MongoDB connected");
+    const db = await mongoose.connect(process.env.MONGO_URI);
+    isConnected = db.connections[0].readyState;
+    console.log("MongoDB Connected Successfully");
   } catch (error) {
-    console.error(`DB Error: ${error.message}`);
-    process.exit(1);
+    console.error("MongoDB Connection Failed:", error);
+    throw error;
   }
 };
 
